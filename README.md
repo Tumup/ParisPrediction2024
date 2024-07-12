@@ -2,12 +2,12 @@
 
 ## Data Preparation
 
-First, we have correctly encoded our dataset in UTF-8. Next, we filtered our data to include only the competitors who have won a medal, whether bronze, silver, or gold, over the years in the Summer Olympic Games. This was done in the file [`data_prep.ipynb`](./data_prep.ipynb).
+First, we have correctly encoded our dataset in UTF-8. Next, we filtered our data to include only the competitors who have won a medal, whether bronze, silver, or gold, over the years in the Summer Olympic Games. This was done in the file [`data_prep.ipynb`](./ONLY_MEDAL_WINNERS/data_prep.ipynb).
 
 
 ## Exploratory Data Analysis (EDA) Summary
 
-All this information can be found in the file  [`EDA.ipynb`](.EDA.ipynb)
+All this information can be found in the file  [`EDA.ipynb`](./ONLY_MEDAL_WINNERS/EDA.ipynb)
 
  Exploratory Data Analysis (EDA), we performed the following steps:
 
@@ -39,22 +39,83 @@ All this information can be found in the file  [`EDA.ipynb`](.EDA.ipynb)
 This comprehensive EDA allowed us to clean the dataset, identify key patterns and trends, and prepare the data for subsequent analysis.
 
 
-## Model
 
-1. **Data Loading and Initial Inspection**:
-   - Loaded the dataset from 'final_filtered_athlete_games.csv'.
-   - Dropped the 'Entry ID' column as it was not useful for our analysis.
+# Ensemble Modeling for Predicting Olympic Medals
+ 
+ All this information can be found in the file [`model.ipynb`](./ONLY_MEDAL_WINNERS/model.ipynb)
 
-2. **Data Splitting**:
-   - Split the data into training and test sets based on the year. The test set includes the Olympic Games from the years 2012, 2016, and 2020, while the training set includes all other years.
+## Introduction
 
-3. **Normalization**:
-   - Applied `StandardScaler` to standardize the numerical columns 'Age' and 'Year'. This ensures that these features have a mean of 0 and a standard deviation of 1.
+In this project, we aimed to predict the probability of winning medals for different teams in various events using an ensemble of machine learning models. The steps taken include data preprocessing, model training, and ensemble creation using `VotingClassifier`.
 
-4. **One-Hot Encoding of Categorical Variables**:
-   - Used `OneHotEncoder` to transform the categorical variables: 'Name', 'Team', 'NOC', 'City', 'Sport', 'Event', 'Season', and 'Gender'. This creates binary columns for each category.
+## Steps and Methodology
 
-5. **Label Encoding of the Target Variable**:
-   - Applied `LabelEncoder` to the target variable 'Medal' to convert the medal types ('Gold', 'Silver', 'Bronze') into numerical labels for use in machine learning models.
+1. **Data Loading and Preprocessing:**
+   - The dataset was loaded from a CSV file.
+   - Unnecessary columns were dropped.
+   - Data was split into training and test sets based on specific years (2012, 2016, 2020).
 
-The resulting training and test DataFrames are now ready for modeling.
+2. **Normalization:**
+   - Applied `StandardScaler` to normalize numerical columns ('Age' and 'Year').
+
+3. **One-Hot Encoding:**
+   - Categorical columns ('Sport', 'Season', 'Gender', 'NOC', 'City') were one-hot encoded.
+
+4. **Label Encoding:**
+   - Encoded 'Team' and 'Event' columns using `LabelEncoder`.
+   - Encoded the target variable 'Medal'.
+
+5. **Model Selection and Training:**
+   - Chose a variety of machine learning models including:
+     - RandomForestClassifier
+     - GradientBoostingClassifier
+     - SVC (Support Vector Classifier)
+     - XGBClassifier (Extreme Gradient Boosting)
+     - AdaBoostClassifier
+     - ExtraTreesClassifier
+     - BaggingClassifier
+     - LogisticRegression
+     - GaussianNB (Gaussian Naive Bayes)
+   - Used default or simplified parameters to reduce training time.
+
+6. **Ensemble Creation:**
+   - Combined the trained models into an ensemble using `VotingClassifier` with soft voting.
+
+7. **Model Evaluation:**
+   - Evaluated the ensemble on validation and test sets using:
+     - Classification Report
+     - Confusion Matrix
+     - Accuracy Score
+   - Predicted probabilities for each class (medal type).
+
+8. **Result Presentation:**
+   - Created a DataFrame to show the probabilities of winning gold, silver, and bronze medals for each event.
+   - Displayed the final results.
+
+## Conclusion
+
+By using an ensemble of various machine learning models, we were able to create a robust predictive model for predicting Olympic medal winners. The use of `VotingClassifier` allowed us to leverage the strengths of multiple models, resulting in improved performance and accuracy. This approach demonstrates the power of ensemble learning in complex classification tasks.
+
+
+# Olympic Medal Prediction App
+
+ All this information can be found in the file [`app.py`](./STREAMLIT/app.py)
+
+This Streamlit application predicts the probability of winning gold, silver, and bronze medals for athletes in the 2024 Olympics based on various features such as age, sport, gender, and more.
+
+## Features
+
+- **User Inputs:**
+  - Age
+  - Year (fixed to 2024)
+  - Sport (dropdown with all sports from the dataset)
+  - Season (fixed to Summer)
+  - Gender (dropdown with options "M" and "F")
+  - NOC (National Olympic Committee, dropdown with all options from the dataset)
+  - City (dropdown with all options from the dataset)
+  - Team (dropdown with all options from the dataset)
+  - Event (dropdown with all options from the dataset)
+
+- **Model Prediction:**
+  - Predicts the probability of winning gold, silver, and bronze medals.
+  - Displays the predicted probabilities for the selected team.
