@@ -30,7 +30,10 @@ All this information can be found in the file  [`EDA.ipynb`](.EDA.ipynb)
      - A horizontal bar chart for the distribution of sports in the dataset.
      - Horizontal bar charts for the top 10 countries with the most gold, silver, and bronze medals won.
 
-5. **Final Data Preparation**:
+5. **Correlation Matrix**:
+   - Conducted a correlation matrix analysis for the numeric variables to understand the relationships between them.
+
+6. **Final Data Preparation**:
    - Saved the cleaned and processed data for further analysis.
 
 This comprehensive EDA allowed us to clean the dataset, identify key patterns and trends, and prepare the data for subsequent analysis.
