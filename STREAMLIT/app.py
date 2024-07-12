@@ -4,14 +4,11 @@ import joblib
 import requests
 import os
 
-# Obtén la ruta del directorio actual
-current_dir = os.getcwd()
-
 # Define the URL to your file in GitHub Releases
 url = 'https://github.com/Tumup/ParisPrediction2024/releases/download/v1.0.0/voting_clf_model.pkl'
 
 # Define the model directory relative to current directory
-model_dir = os.path.join(current_dir, 'STREAMLIT')
+model_dir = os.path.join(os.getcwd(), 'STREAMLIT')
 
 # Check if the file already exists
 model_path = os.path.join(model_dir, 'voting_clf_model.pkl')
@@ -27,9 +24,14 @@ if not os.path.exists(model_path):
         st.write(f"Error downloading the model: {e}")
 
 # Load the dataset to extract options for the dropdowns
-data_path = os.path.join(current_dir, 'STREAMLIT', 'DATA', 'final_filtered_athlete_games.csv')
+data_filename = 'final_filtered_athlete_games.csv'
+data_path = os.path.join('STREAMLIT', 'DATA', data_filename)
 st.write(f"Loading dataset from {data_path}")
-df = pd.read_csv(data_path)
+try:
+    df = pd.read_csv(data_path)
+except FileNotFoundError:
+    st.error(f"File '{data_filename}' not found. Please ensure the file exists at '{data_path}'.")
+    st.stop()
 
 # Extract unique options for the dropdowns
 sports = df['Sport'].unique().tolist()
