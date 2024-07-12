@@ -5,7 +5,7 @@
 First, we have correctly encoded our dataset in UTF-8. Next, we filtered our data to include only the competitors who have won a medal, whether bronze, silver, or gold, over the years in the Summer Olympic Games. This was done in the file [`data_prep.ipynb`](./data_prep.ipynb).
 
 
-### Exploratory Data Analysis (EDA) Summary
+## Exploratory Data Analysis (EDA) Summary
 
 All this information can be found in the file  [`EDA.ipynb`](.EDA.ipynb)
 
@@ -37,3 +37,24 @@ All this information can be found in the file  [`EDA.ipynb`](.EDA.ipynb)
    - Saved the cleaned and processed data for further analysis.
 
 This comprehensive EDA allowed us to clean the dataset, identify key patterns and trends, and prepare the data for subsequent analysis.
+
+
+## Model
+
+1. **Data Loading and Initial Inspection**:
+   - Loaded the dataset from 'final_filtered_athlete_games.csv'.
+   - Dropped the 'Entry ID' column as it was not useful for our analysis.
+
+2. **Data Splitting**:
+   - Split the data into training and test sets based on the year. The test set includes the Olympic Games from the years 2012, 2016, and 2020, while the training set includes all other years.
+
+3. **Normalization**:
+   - Applied `StandardScaler` to standardize the numerical columns 'Age' and 'Year'. This ensures that these features have a mean of 0 and a standard deviation of 1.
+
+4. **One-Hot Encoding of Categorical Variables**:
+   - Used `OneHotEncoder` to transform the categorical variables: 'Name', 'Team', 'NOC', 'City', 'Sport', 'Event', 'Season', and 'Gender'. This creates binary columns for each category.
+
+5. **Label Encoding of the Target Variable**:
+   - Applied `LabelEncoder` to the target variable 'Medal' to convert the medal types ('Gold', 'Silver', 'Bronze') into numerical labels for use in machine learning models.
+
+The resulting training and test DataFrames are now ready for modeling.
