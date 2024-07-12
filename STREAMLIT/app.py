@@ -24,7 +24,7 @@ if not os.path.exists(model_path):
         st.write(f"Error downloading the model: {e}")
 
 # Load the dataset to extract options for the dropdowns
-data_path = os.path.join('..', 'DATA', 'final_filtered_athlete_games.csv')
+data_path = os.path.join(os.path.dirname(__file__), '..', 'DATA', 'final_filtered_athlete_games.csv')
 st.write(f"Loading dataset from {data_path}")
 df = pd.read_csv(data_path)
 
