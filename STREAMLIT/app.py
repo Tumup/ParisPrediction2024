@@ -25,7 +25,7 @@ if not os.path.exists(model_path):
 
 # Load the dataset to extract options for the dropdowns
 data_filename = 'final_filtered_athlete_games.csv'
-data_path = os.path.join('STREAMLIT', 'DATA', data_filename)
+data_path = os.path.join('DATA', data_filename)  # Adjusted path here
 st.write(f"Loading dataset from {data_path}")
 try:
     df = pd.read_csv(data_path)
